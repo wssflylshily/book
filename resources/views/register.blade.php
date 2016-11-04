@@ -213,7 +213,6 @@
             return;
           }
         }
-
         $.ajax({
           type: "POST",
           url: '/service/register',
@@ -235,6 +234,7 @@
               return;
             }
 
+            console.log(data.message);
             $('.bk_toptips').show();
             $('.bk_toptips span').html('注册成功');
             setTimeout(function() {$('.bk_toptips').hide();}, 2000);

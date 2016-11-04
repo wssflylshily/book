@@ -41,5 +41,50 @@
   $('.bk_validate_code').click(function () {
     $(this).attr('src', '/service/validate_code/create?random=' + Math.random());
   });
+    
+    function onLoginClick() {
+        var username = $('input[name=username]').val();
+        if (username.length == 0){
+            $('.bk_toptips').show();
+            $('.bk_toptips span').html('账号不能为空');
+            setTimeout(function () {
+                $('.bk_toptips').hide();
+            },2000);
+            return;
+        }
+        if (username.indexOf('@') == -1){//手机号注册
+            if (username.length != 11 || username[0] != 1){
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('账号格式不正确');
+                setTimeout(function () {
+                    $('.bk_toptips').hide();
+                },2000);
+                return;
+            }else{
+                if (username.indexOf('.') == -1){
+                    $('.bk_toptips').show();
+                    $('.bk_toptips span').html('账号格式不正确');
+                    setTimeout(function () {
+                        $('.bk_toptips').hide();
+                    },2000);
+                    return;
+                }
+            }
+
+            //密码
+            var password = $('input[name=password]').val();
+            if (password.length < 6){
+                $('.bk_toptips').show();
+                $('.bk_toptips span').html('密码不能少于6位!');
+                setTimeout(function () {
+                    $('.bk_toptips').hide();
+                },2000);
+                return;
+            }
+            if (password){
+
+            }
+        }
+    }
 </script>
 @endsection

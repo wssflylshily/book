@@ -23,3 +23,6 @@ Route::get('/register', 'View\MemberCodeController@toRegister');
 
 Route::any('service/validate_code/create','Service\ValidateCodeController@create');
 Route::any('service/validate_code/send','Service\ValidateCodeController@sendSMS');
+Route::any('service/validate_code/validateEmail','Service\ValidateCodeController@validateEmail');
+Route::any('service/register','Service\MemberCodeController@register');
+Route::any('service/sendEmailReminder','Service\MemberCodeController@sendEmailReminder');
