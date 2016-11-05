@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="/css/book.css">
 </head>
 <body>
+<div class="bk_title_bar">
+    <img src="" class="bk">
+    <p></p>
+    <img src="">
+</div>
 
 <div class="page">
   @yield('content')

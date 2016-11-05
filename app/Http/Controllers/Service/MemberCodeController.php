@@ -116,4 +116,50 @@ class MemberCodeController extends Controller
             $message->to($data['email'], $data['name'])->subject('欢迎注册我们的网站，请激活您的账号！');
         });
     }
+
+    public function login(Request $request){
+        $username = $request->get('username', '');
+        $pasword = $request->get('password', '');
+        $validate_code = $request->get('validate_code', '');
+
+        $m3_result = new M3Result();
+
+        //校验
+        $validate_code_session = $request->session()->get('validate_code');
+        if ($validate_code != $validate_code_session){
+            $m3_result->status = 1;
+            $m3_result->message = '验证码不正确';
+            return $m3_result->toJson();
+        }
+
+        if (strpos($username, '@') == true){
+            $member = Member::where('email', $username)->first();
+        }else{
+            $member = Member::where('phone', $username)->first();
+        }
+
+        if ($member == null){
+            $m3_result->status = 2;
+            $m3_result->message = '该用户不存在';
+            return $m3_result->toJson();
+        }
+        elseif ($member->state != 1){
+            $m3_result->status = 3;
+            $m3_result->message = '该用户未被激活';
+            return $m3_result->toJson();
+        }
+        else{
+            if (md5('sf' + $pasword) != $member->password){
+                $m3_result->status = 4;
+                $m3_result->message = '密码不正确';
+                return $m3_result->toJson();
+            }
+        }
+
+        $request->session()->put('member', $member);
+
+        $m3_result->status = 0;
+        $m3_result->message = '登陆成功';
+        return $m3_result->toJson();
+    }
 }

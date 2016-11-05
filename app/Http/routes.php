@@ -19,10 +19,15 @@ Route::get('/', function () {
 Route::get('/login', 'View\MemberCodeController@toLogin');
 
 Route::get('/register', 'View\MemberCodeController@toRegister');
+Route::get('/category', 'View\BookController@toCategory');
 
 
-Route::any('service/validate_code/create','Service\ValidateCodeController@create');
-Route::any('service/validate_code/send','Service\ValidateCodeController@sendSMS');
-Route::any('service/validate_code/validateEmail','Service\ValidateCodeController@validateEmail');
-Route::any('service/register','Service\MemberCodeController@register');
-Route::any('service/sendEmailReminder','Service\MemberCodeController@sendEmailReminder');
+Route::group(['prefix' => 'service'], function () {
+    Route::any('validate_code/create','Service\ValidateCodeController@create');
+    Route::any('validate_code/send','Service\ValidateCodeController@sendSMS');
+    Route::any('validate_code/validateEmail','Service\ValidateCodeController@validateEmail');
+    Route::any('register','Service\MemberCodeController@register');
+    Route::any('login','Service\MemberCodeController@login');
+    Route::any('category/parent_id/{parent_id}','Service\BookController@toCategory');
+    Route::any('sendEmailReminder','Service\MemberCodeController@sendEmailReminder');
+});
